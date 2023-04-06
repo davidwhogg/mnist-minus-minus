@@ -13,14 +13,18 @@
 \maketitle
 
 \begin{abstract}\noindent
-    The objective of this paper is to introduce data, code and benchmarks for simple invariant, equivariant and reasoning tasks. We call our package MNIST-minus-minus, and it provides four datasets and learning tasks based on the MNIST and Fashion-MNIST datasets.
+    The objective of this paper is to introduce data, code and benchmarks for simple invariant, equivariant and reasoning tasks. We call our package MNIST-plus-plus. It provides four datasets based on simple tranformations of MNIST and Fashion-MNIST.
 \end{abstract}
 
 \section{Introduction}
 
-Real-world learning tasks may require to identify objects in arbitrary orientations. The objective of this work is to provide toy datasets for these tasks. A natural example is to take the fashion-MNIST data and subject it to random rotations and reflections, since clothing doesn't really have a preferred orientation.
+Real-world learning tasks may require to identify objects in arbitrary orientations and make inference depending on contexts. The objective of this work is to provide toy datasets for these tasks. 
 
-In natural images text can appear with different shears and orientations. Therefore it is natural to considered a transformed version of MNIST. However, handwritten digits may not be identifiable after rotations or reflections (6s and 9s, 2s and 5s, or even 2s and 6s may look indistinguishable after these transformations). Therefore our dataset includes contextual information that allows 
+\subsection{Fashion-MNIST-plus}
+The Fashion-MNIST-plus dataset takes the Fashion-MNIST data and subject it to random rotations and reflections. This is a natural classification task since clothing doesn't really have a preferred orientation.
+The 
+
+In natural images text can appear with different shears and orientations. Therefore it is natural to considered a transformed version of MNIST. However, handwritten digits may not be identifiable after rotations or reflections (6s and 9s, 2s and 5s, or even 2s and 6s may look indistinguishable after these transformations). To make the learning problem well-defined our dataset includes contextual information that allows to determine the orientation a
 
 \section{Benchmarks}
 
