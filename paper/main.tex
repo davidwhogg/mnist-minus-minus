@@ -16,7 +16,7 @@
 \markboth{}{\color{gray}\sffamily Hogg \& Villar / \texttt{MNIST-plus-plus}}
 \sloppy\sloppypar\raggedbottom\frenchspacing
 
-\title{\bfseries MNIST-plus-plus: a benchmark for equivariant learning and reasoning tasks}
+\title{\bfseries MNIST-plus-plus: Benchmarks for equivariant learning and reasoning tasks}
 \author{David W. Hogg \& Soledad Villar}
 \date{}
 
@@ -25,12 +25,27 @@
 \maketitle
 
 \begin{abstract}\noindent
-    The objective of this paper is to introduce data, code and benchmarks for simple invariant, equivariant and reasoning tasks. We call our package MNIST-plus-plus. It provides four datasets based on simple tranformations of MNIST and Fashion-MNIST.
+    The objective of this paper is to introduce data, code and benchmarks for simple equivariant classification, regression, and reasoning tasks.
+    We provide four datasets and seven learning tasks based on simple tranformations of the MNIST and Fashion-MNIST datasets.
+    Some of the learning tasks are to recognize objects and handwritten digits in images that have had geometric transformations applied; some are to identify the geometric transformations themselves.
+    The images are designed to contain enough context to determine (in most cases) both the image contents and the geometric transformations.
+    We train standard-issue CNNs to deliver baseline performances on the learning tasks.
+    One of the tasks---MNIST-plus-4---involves identifying ordered sets of numbers in a transformed image; it is a true reasoning task and is therefore expected to be challenging for contemporary machine-learning methods.
 \end{abstract}
 
 \section{Introduction}
 
-Real-world learning tasks may require to identify objects in arbitrary orientations and make inference depending on contexts. The objective of this work is to provide toy datasets for these tasks. 
+Real-world learning tasks may require to identify objects in arbitrary orientations and make inference depending on contexts. 
+See Figure~\ref{fig:example} for an example image and recognition task in this category.
+The objective of this work is to provide toy datasets for these tasks. 
+
+Describe, cite and honor MNIST. Also Fashion-MNIST.
+
+We have made four datasets and seven learning tasks, all of which are designed to be swap-in replacements for MNIST and Fashion-MNIST.
+We have trained some standard CNNs to provide baseline performance on all seven tasks.
+These baselines should be easy to crush.
+
+\section{Datasets and learning tasks}
 
 \subsection{Fashion-MNIST-plus}
 The Fashion-MNIST-plus dataset takes the Fashion-MNIST data and subject it to random rotations and reflections. This is a natural classification task since clothing doesn't really have a preferred orientation.
@@ -38,12 +53,52 @@ The
 
 In natural images text can appear with different shears and orientations. Therefore it is natural to considered a transformed version of MNIST. However, handwritten digits may not be identifiable after rotations or reflections (6s and 9s, 2s and 5s, or even 2s and 6s may look indistinguishable after these transformations). To make the learning problem well-defined our dataset includes contextual information that allows to determine the orientation a
 
-\begin{figure}[tp]
+\begin{figure}[t!]
 \includegraphics[width=\textwidth]{../notebooks/MNIST-f.png}
 \caption{foo and bar.\label{fig:f}}
 \end{figure}
 
-\section{Benchmarks}
+\paragraph{Fashion-MNIST-plus learning task:} Identify the labels (classification).
 
-\section{}
+\subsection{MNIST-plus-4}
+
+\begin{figure}[t!]
+\includegraphics[width=\textwidth]{../notebooks/MNIST-4.png}
+\caption{foo and bar.\label{fig:4}}
+\end{figure}
+
+\paragraph{MNIST-plus-4 learning tasks:} Identify the labels (classification and reasoning). Identify the discrete group element applied (classification).
+
+\subsection{MNIST-plus-9}
+
+\begin{figure}[t!]
+\includegraphics[width=\textwidth]{../notebooks/MNIST-9.png}
+\caption{foo and bar.\label{fig:9}}
+\end{figure}
+
+\paragraph{MNIST-plus-9 learning tasks:} Identify the labels (classification). Identify the discrete group element applied (classification).
+
+\subsection{MNIST-plus-Infinity}
+
+\begin{figure}[t!]
+\includegraphics[width=\textwidth]{../notebooks/MNIST-Inf.png}
+\caption{foo and bar.\label{fig:Inf}}
+\end{figure}
+
+\paragraph{MNIST-plus-Infinity learning tasks:} Identify the labels (classification). Identify the continuous geometric transformation applied (regression).
+
+\section{Baselines}
+
+\section{Discussion}
+
+\paragraph{Acknowledgements}
+It is a pleasure to thank
+  Wilson Gregory (JHU)
+for valuable discussions.
+SOLE GRANT NUMBERS.
+
+\bibliographystyle{plain}
+\raggedright
+\bibliography{dipole}
+
 \end{document}
