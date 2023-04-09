@@ -17,7 +17,7 @@
 \sloppy\sloppypar\raggedbottom\frenchspacing
 \renewcommand{\paragraph}[1]{\par\medskip\noindent\textbf{#1} ---}
 
-\title{\bfseries \texttt{MNIST++}: Benchmarks for equivariant learning and reasoning tasks}
+\title{\bfseries \texttt{MNIST-plus-plus}: Benchmarks for geometric and equivariant learning and reasoning tasks}
 \author{David W. Hogg \& Soledad Villar}
 \date{}
 
@@ -26,25 +26,42 @@
 \maketitle
 
 \begin{abstract}\noindent
-    The objective of this paper is to introduce data, code and benchmarks for simple equivariant classification, regression, and reasoning tasks.
+    The objective of this paper is to introduce data, code and benchmarks for simple classification, regression, and reasoning tasks in situations where geometry and geometric symmetries are in play.
     We provide four datasets and seven learning tasks based on simple tranformations of the MNIST and Fashion-MNIST datasets.
     Some of the learning tasks are to recognize objects and handwritten digits in images that have had geometric transformations applied; some are to identify the geometric transformations themselves.
     The images are designed to contain enough context to determine (in most cases) both the image contents and the geometric transformations.
     We train standard-issue CNNs to deliver baseline performances on the learning tasks.
+    [SOME SUMMARY OF CNN RESULTS HERE]
     One of the tasks---\texttt{MNIST+4}---involves identifying ordered sets of numbers in a transformed image; it is a true reasoning task and is therefore expected to be challenging for contemporary machine-learning methods.
 \end{abstract}
 
 \section{Introduction}
 
-Real-world learning tasks may require to identify objects in arbitrary orientations and make inference depending on contexts. 
-See Figure~\ref{fig:example} for an example image and recognition task in this category.
-The objective of this work is to provide toy datasets for these tasks. 
+Real-world tasks require us to identify objects in arbitrary orientations and make inferences about their orientations using context. 
+See Figure~\ref{fig:example} for example images containing many objects in different orientations.
+These images inspire recognition tasks that are interesting from a learning perspective, but also have industrial and commercial uses.
+The objective of this contribution is to provide toy datasets that represent baby steps towards general recognition and geometric inference tasks.
+These datasets are designed to create benchmarks for learning and reasoning methods.
 
-When you pick up a piece of paper with writing or printing on it, how do you orient it to read it?
-What would happen if the paper contained only 6s or only 9s or only 8s?
-Etc...
+Individual letters, numbers, and symbols can only be reliably read in certain orientations.
+For examples, Ws and Ms, 6s and 9s, ps and ds, 8s and $\infty$s, and so on, cannot be distinguished easily without some understanding of the orientation in which they were written, or intended to be read.
+Despite this, when capable human readers pick up pieces of paper with writing or printing on it, they have no trouble orienting them correctly.
+How do they orient papers to read them?
+They find the orientation that makes the majority of the characters easy to read, in which the writing makes sense or can be used for subsequent tasks.
+What would happen if the papers contained only 6s or only Ws?
+In this case the papers would not say much of interest!
+But they also would be impossible to confidently orient.
+So (somehow) it is the diversity of the characters on the page that sets the page orientation.
 
-Describe, cite and honor MNIST. Also Fashion-MNIST.
+Individual handwritten digits are the content of what might be the most important benchmark dataset in all of machine learning---the MNIST dataset \cite{mnist}.
+As of writing, this dataset has more than XXX citations and many spin-off projects such as spherical-MNIST \cite{spherical}, and Fashion-MNIST \cite{fashion}.
+The learning task for MNIST is very simple---identify the handwritten digit from 0 to 9---given oriented, black-and-white thumbnail images.
+This task is explicitly \emph{not} an equivariant or geometric task.
+All of the digits are given in standard Roman orientations.
+Indeed, MNIST recognition projects that enforce invariances or equivariances have the property that they fail to distinguish 6s from 9s, among other pathologies \cite{something}.
+
+In the Real World (tm), printed or captured visual information (letters, digits, images, and symbols) is not always (and maybe not even often) presented to us in an oriented way.
+We must orient the print or image before reading it or interpreting it....
 
 BUT: In natural images text can appear with different shears and orientations.
 Therefore it is natural to considered a transformed version of MNIST. However, handwritten digits may not be identifiable after rotations or reflections (6s and 9s, 2s and 5s, or even 2s and 6s may look indistinguishable after these transformations).
@@ -52,6 +69,7 @@ In natural contexts, however, 6s and 9s are not read in isolation; they are read
 Thus we can make a dataset that is invariant to rotations, but which includes enough contextual information to determine orientations and parities.
 
 We have made four datasets and seven learning tasks, all of which are designed to be swap-in replacements for MNIST and Fashion-MNIST.
+RELATIONSHIP to data augmentation?
 We have trained some standard CNNs to provide baseline performance on all seven tasks.
 These baselines should be easy to crush.
 
