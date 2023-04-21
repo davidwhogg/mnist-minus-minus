@@ -34,7 +34,7 @@
     The images are designed to contain enough context to determine (in most cases) both the image contents and the geometric transformations.
     We train standard-issue CNNs to deliver baseline performances on the learning tasks.
     [SOME SUMMARY OF CNN RESULTS HERE]
-    One of the tasks---\texttt{MNIST+4}---involves identifying ordered sets of numbers in a transformed image; it is a true reasoning task and is therefore expected to be challenging for contemporary machine-learning methods.
+    One of the tasks---\texttt{MNIST+4}---involves identifying an ordered list of numbers in a transformed image; it is a true reasoning task and is therefore expected to be challenging for contemporary machine-learning methods.
 \end{abstract}
 
 \section{Introduction}
@@ -88,7 +88,7 @@ The dihedral group $D_4$ is the group of symmetries of the square.
 Each element $M$ of the group can be represented as a $2\times 2$ matrix (given some coordinate ordering conventions).
 In some sense, \texttt{Fashion++} is a pure data augmentation of Fashion-MNIST, except that the input Fashion-MNIST dataset and the output \texttt{Fashion++} dataset contain the same total numbers of images.
 Because data elements were chosen randomly, some of the Fashion-MNIST input images are used more than once, and some are never used.
-To prevent any spillage of information from training set to test set, we make the \texttt{Fashion++} training set only from the Fashion-MNIST training-set data, and we make the \texttt{Fashion++} test set only from the Fashion-MNIST test-set data. 
+To prevent any spillage of information from training set to test set, the \texttt{Fashion++} training set is made only from the Fashion-MNIST training-set data, and the \texttt{Fashion++} test set is made only from the Fashion-MNIST test-set data. 
 
 The \texttt{Fashion++} images are $28\times 28$ one-channel, 8-bit (\texttt{uint8}) black-and-white images.
 Associated with each image is an integer label with one of ten values from 0 through 9 inclusive, representing the classes listed above.
@@ -105,50 +105,71 @@ The first thirty-six elements of the \texttt{Fashion++} training set, along with
 The learning challenge for this dataset is purely to train on the training set and predict the object labels for the test set. There could be an additional challenge of learning the $D_4$ group elements, but this challenge is much more salient for the subsequent datasets.
 
 \paragraph{Dataset 2: \texttt{MNIST+4}}
-HOGG: Words about MNIST data here.
+The MNIST-plus-four (\texttt{MNIST+4}) dataset takes the MNIST data \cite{mnist}, clicks images together into $2\times 2$ mosaics, and subjects these mosaics to random rotations and reflections.
+The MNIST dataset contains $28\times 28$ (CHECK) one-channel, 8-bit (\texttt{uint8}) black-and-white images of handwritten digits from zero through nine, inclusive.
+The label for each image is the integer digit.
 
-HOGG: Words about the fast and slow writing directions here.
+The individual MNIST digits are always presented in the standard written orientation, in which the digit has correct written parity, and up is up.
+For what follows, it will help for us to consider two important directions when it comes to (English) handwriting: ``fast'' and ``slow''.
+A line of handwriting is written from left to right.
+The next line of handwriting is written below the previous line.
+Thus there is a fast direction for writing, which is to the right on the page.
+There is a slow direction, which is downwards on the page.
+The problem of orienting a piece of writing such that it can be read is the problem of orienting it such that the fast direction is to the right and the slow direction is downwards.
 
-HOGG: Why you need multiple digits to read digits. Why Spherical-MNIST is a mistake!
+If one simply augments the MNIST data by applying random rotations and reflections, the digits become had to read. 6s are indistinguishable from 9s, and there is lots of confusion between 2s and 5s, and (perhaps surprisingly) 4s and 7s and also 2s and 6s.
+If we are going to make an equivariant learning task out of MNIST that is well posed---that is, if we are going to make an equivariant learning task in which 6s can be distinguished from 9s---we need to provide more context.
+Hence, we are building blocks of digits, all of which are identically oriented, prior to applying randomly chosen elements of the dihedral group $D_4$.
 
-HOGG: How we constructed the data.
+In detail, each element of \texttt{MNIST+4} is a set of four randomly chosen images from MNIST, concatenated together into a $2\times2$ image mosaic that has four times as many pixels as an MNIST image.
+Because MNIST elements were chosen randomly, some of the Fashion-MNIST input images are used more than once, and some are never used.
+Each mosaic image is transformed by a linear transformation, which is one of the 8 group elements of the dihedral group $D_4$.
+The label for each \texttt{MNIST+4} image is the list of four MNIST labels, ordered in standard (English) reading order in the mosaic prior to application of the transformation (that is, in standard reading orientation).
+To prevent any spillage of information from training set to test set, the \texttt{MNIST+4} training set is made only from the MNIST training-set data, and the \texttt{MNIST+4} test set is made only from the MNIST test-set data. 
+
+The \texttt{MNIST+4} images are $56\times 56$ [CHECK] one-channel, 8-bit (\texttt{uint8}) black-and-white images.
+Associated with each image is a 4-character string label with values from ``0000'' through ``9999'' inclusive, representing the digits in each image, in (English) reading order (when the image has been re-transformed back to standard reading orientation).
+In addition to the label, associated with each image is a 2x2 integer matrix $M$ which represents the $D_4$ group element that could be applied to rotate and reflect the image back to standard orientation.
+There are 60,000 elements (image plus label plus group element) in the training set and 10,000 in the test set.
+The first thirty-six elements of the \texttt{MNIST+4} training set, along with both their labels and a visualization of the $D_4$ group elements, are shown in \figref{fig:4}.
+\begin{figure}[t!]
+\includegraphics[width=\textwidth]{../notebooks/MNIST+4.png}
+\caption{The first 36 training-set images from the \texttt{MNIST+4} dataset. The labels are given in the image titles. The $D_4$ group elements are shown as a pair of lines superimposed on each image; the solid line points in the fast direction (what would be left-to-right on the page in this case), and the dotted line points in the slow direction (what would be down the page in this case).\label{fig:4}}
+\end{figure}
+
+\paragraph{Challenge 2: \texttt{MNIST+4} group elements}
+Foo and bar.
+
+\paragraph{Challenge 3: \texttt{MNIST+4} labels}
+Identify the labels (classification and reasoning).
+This has a reasoning component; note that some labels in the test set don't exist in the training set.
+And yet humans can crush this (ish).
 
 HOGG: How is this a reasoning task, and (related) how this is not a regression.
 
 SOLE: Please put a citation to Bengio reasoning here. 
 The benchmark dataset for reasoning tasks \cite{zhang2021pointer} is likely harder than ours. 
 
-The \texttt{MNIST+4} images are $56\times 56$ [CHECK] one-channel, 8-bit (\texttt{uint8}) black-and-white images.
-Associated with each image is a 4-character string label with values from ``0000'' through ``9999'' inclusive, representing the digits in each image, in (English) reading order (when the image has been re-transformed back to standard reading orientation).
-In addition to the label, associated with each image is a 2x2 integer matrix $M$ which represents the $D_4$ group element that could be applied to rotate and reflect the image back to standard orientation.
-There are eight different values for this 2x2 integer matrix.
-There are 60,000 elements (image plus label plus group element) in the training set and 10,000 in the test set.
-The first thirty-six elements of the \texttt{MNIST+4} training set, along with both their labels and a visualization of the $D_4$ group elements, are shown in \figref{fig:4}.
-\begin{figure}[t!]
-\includegraphics[width=\textwidth]{../notebooks/MNIST+4.png}
-\caption{The first 36 training-set images from the \texttt{MNIST+4} dataset. The labels are given in the image titles. The $D_4$ group elements are shown as a pair of lines superimposed on each image; the solid line points in the ``fast'' direction (the writing direction; what would be left-to-right on the page in this case), and the dotted line points in the ``slow'' direction (what would be down the page in this case).\label{fig:4}}
-\end{figure}
-
-\paragraph{Challenge 2: \texttt{MNIST+4} labels}
-Identify the labels (classification and reasoning).
-This has a reasoning component; note that some labels in the test set don't exist in the training set.
-And yet humans can crush this (ish).
-
-\paragraph{Challenge 3: \texttt{MNIST+4} group elements}
-Foo and bar.
-
 \paragraph{Dataset 3: \texttt{MNIST+9}}
+The MNIST-plus-nine (\texttt{MNIST+9}) dataset is made identically to the \texttt{MNIST+4} dataset with two important differences.
+The first is that the images are $3\times 3$ mosaics showing nine elements of MNIST, instead of four.
+The second is that each image label is an integer representing the central digit only.
 
+The \texttt{MNIST+9} images are $84\times 84$ [CHECK] one-channel, 8-bit (\texttt{uint8}) black-and-white images.
+Associated with each image is an integer label with values from 0 through 9 inclusive, representing the value of the central digit in each image.
+In addition to the label, associated with each image is a 2x2 integer matrix $M$ which represents the $D_4$ group element that could be applied to rotate and reflect the image back to standard orientation.
+There are 60,000 elements (image plus label plus group element) in the training set and 10,000 in the test set.
+The first thirty-six elements of the \texttt{MNIST+9} training set, along with both their labels and a visualization of the $D_4$ group elements, are shown in \figref{fig:9}.
 \begin{figure}[t!]
 \includegraphics[width=\textwidth]{../notebooks/MNIST+9.png}
-\caption{foo and bar.\label{fig:9}}
+\caption{The first 36 training-set images from the \texttt{MNIST+9} dataset. The labels are given in the image titles. The $D_4$ group elements are shown as a pair of lines superimposed on each image, as in \figref{fig:4}.\label{fig:9}}
 \end{figure}
 
-\paragraph{Challenge 4: \texttt{MNIST+9} central digit labels}
-Identify the labels (classification and reasoning).
-
-\paragraph{Challenge 5: \texttt{MNIST+9} group elements}
+\paragraph{Challenge 4: \texttt{MNIST+9} group elements}
 Foo and bar.
+
+\paragraph{Challenge 5: \texttt{MNIST+9} central digit labels}
+Identify the labels (classification and reasoning).
 
 \paragraph{Dataset 4: \texttt{MNIST+Inf}}
 
@@ -157,13 +178,25 @@ Foo and bar.
 \caption{foo and bar.\label{fig:Inf}}
 \end{figure}
 
-\paragraph{Challenge 6: \texttt{MNIST+Inf} central digit labels}
-Identify the labels (classification and reasoning).
-
-\paragraph{Challenge 7: \texttt{MNIST+Inf} linear transformation operators}
+\paragraph{Challenge 6: \texttt{MNIST+Inf} linear transformation operators}
 Foo and bar. This is a regression!
 
+\paragraph{Challenge 7: \texttt{MNIST+Inf} central digit labels}
+Identify the labels (classification and reasoning).
+
 \section{Baselines}
+
+\paragraph{Classification tasks}
+Of the seven challenges, five are classification tasks.
+WE DO THESE HOW?
+
+\paragraph{Regression task}
+Of the seven challenges, one is a regression task.
+WE DO THIS HOW?
+
+\paragraph{Reasoning task}
+Of the seven challenges, one is a reasoning task, or has reasoning elements.
+WE PUNT THIS HOW?
 
 \section{Data download and discussion}
 
