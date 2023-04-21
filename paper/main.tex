@@ -102,16 +102,31 @@ The first thirty-six elements of the \texttt{Fashion++} training set, along with
 \end{figure}
 
 \paragraph{Challenge 1: Infer \texttt{Fashion++} labels}
-Identify the labels (classification).
+The learning challenge for this dataset is purely to train on the training set and predict the object labels for the test set. There could be an additional challenge of learning the $D_4$ group elements, but this challenge is much more salient for the subsequent datasets.
 
 \paragraph{Dataset 2: \texttt{MNIST+4}}
+HOGG: Words about MNIST data here.
+
+HOGG: Words about the fast and slow writing directions here.
+
+HOGG: Why you need multiple digits to read digits. Why Spherical-MNIST is a mistake!
+
+HOGG: How we constructed the data.
+
+HOGG: How is this a reasoning task, and (related) how this is not a regression.
 
 SOLE: Please put a citation to Bengio reasoning here. 
 The benchmark dataset for reasoning tasks \cite{zhang2021pointer} is likely harder than ours. 
 
+The \texttt{MNIST+4} images are $56\times 56$ [CHECK] one-channel, 8-bit (\texttt{uint8}) black-and-white images.
+Associated with each image is a 4-character string label with values from ``0000'' through ``9999'' inclusive, representing the digits in each image, in (English) reading order (when the image has been re-transformed back to standard reading orientation).
+In addition to the label, associated with each image is a 2x2 integer matrix $M$ which represents the $D_4$ group element that could be applied to rotate and reflect the image back to standard orientation.
+There are eight different values for this 2x2 integer matrix.
+There are 60,000 elements (image plus label plus group element) in the training set and 10,000 in the test set.
+The first thirty-six elements of the \texttt{MNIST+4} training set, along with both their labels and a visualization of the $D_4$ group elements, are shown in \figref{fig:4}.
 \begin{figure}[t!]
 \includegraphics[width=\textwidth]{../notebooks/MNIST+4.png}
-\caption{foo and bar.\label{fig:4}}
+\caption{The first 36 training-set images from the \texttt{MNIST+4} dataset. The labels are given in the image titles. The $D_4$ group elements are shown as a pair of lines superimposed on each image; the solid line points in the ``fast'' direction (the writing direction; what would be left-to-right on the page in this case), and the dotted line points in the ``slow'' direction (what would be down the page in this case).\label{fig:4}}
 \end{figure}
 
 \paragraph{Challenge 2: \texttt{MNIST+4} labels}
